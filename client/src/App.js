@@ -1,32 +1,55 @@
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
+import { AuthProvider } from './context/AuthContext';
+import { WishlistProvider } from './context/WishlistContext';
+import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Checkout from './pages/Checkout';
 import ProductDetail from './components/ProductDetail';
-import AdminPanel from './components/AdminPanel';
 import Cart from './components/Cart';
 import Login from './components/Login';
 import Register from './components/Register';
+import Profile from './components/Profile';
+import ProtectedRoute from './components/ProtectedRoute';
+import MyOrders from './pages/MyOrders';
+import Wishlist from './pages/Wishlist';
 
 export default function App() {
   return (
-    <div>
-      <nav style={{ padding: 12, background: '#0b5', marginBottom: 12 }}>
-        <Link to="/" style={{ marginRight: 12 }}>Home</Link>
-        <Link to="/admin" style={{ marginRight: 12 }}>Admin</Link>
-        <Link to="/cart">Cart</Link>
-      </nav>
-      <div className="container">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/admin" element={<AdminPanel />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/cart" element={<Cart />} />
-        </Routes>
-      </div>
-    </div>
+    <AuthProvider>
+      <CartProvider>
+        <WishlistProvider>
+          <div>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/wishlist" element={<Wishlist />} />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/orders"
+                element={
+                  <ProtectedRoute>
+                    <MyOrders />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </div>
+        </WishlistProvider>
+      </CartProvider>
+    </AuthProvider>
   );
 }

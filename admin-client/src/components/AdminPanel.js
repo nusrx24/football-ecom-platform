@@ -115,7 +115,7 @@ export default function AdminPanel() {
         >
           Products Management
         </button>
-        <Link to="/admin/orders" className="btn btn-outline">
+        <Link to="/orders" className="btn btn-outline">
           Orders Management
         </Link>
       </div>
@@ -358,9 +358,11 @@ export default function AdminPanel() {
                         </td>
                         <td>
                           <strong>{p.name}</strong>
-                          <div style={{ fontSize: '0.875rem', color: '#666' }}>                          {[p.team, p.league, p.brand, p.jerseyType].filter(Boolean).join(' • ') && (
-                            <div>{[p.team, p.league, p.brand, p.jerseyType].filter(Boolean).join(' • ')}</div>
-                          )}                            {p.description?.substring(0, 50)}{p.description?.length > 50 ? '...' : ''}
+                          <div style={{ fontSize: '0.875rem', color: '#666' }}>
+                            {[p.team, p.league, p.brand, p.jerseyType].filter(Boolean).join(' • ') && (
+                              <div>{[p.team, p.league, p.brand, p.jerseyType].filter(Boolean).join(' • ')}</div>
+                            )}
+                            {p.description?.substring(0, 50)}{p.description?.length > 50 ? '...' : ''}
                           </div>
                         </td>
                         <td>${p.price.toFixed(2)}</td>

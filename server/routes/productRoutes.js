@@ -19,5 +19,6 @@ router.post('/',
 
 router.put('/:id', verifyToken, isAdmin, productController.updateProduct);
 router.delete('/:id', verifyToken, isAdmin, productController.deleteProduct);
+router.post('/:id/reviews', verifyToken, productController.createReview);
 
 module.exports = router;

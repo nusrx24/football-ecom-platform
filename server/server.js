@@ -12,9 +12,11 @@ app.use(cors());
 
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/orders', orderRoutes);
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/football-ecom';
 
