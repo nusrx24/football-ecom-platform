@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mongo:
-    build: ./mongo
+    image: devnusair24/football-ecom-mongo:latest
     container_name: football-mongo
     ports:
       - "27017:27017"
@@ -10,7 +10,7 @@ services:
       - mongo_data:/data/db
 
   backend:
-    build: ./server
+    image: devnusair24/football-ecom-backend:latest
     container_name: football-backend
     ports:
       - "5000:5000"
@@ -22,10 +22,7 @@ services:
       - mongo
 
   frontend:
-    build:
-      context: ./client
-      args:
-        - REACT_APP_API_URL=http://localhost:5000/api
+    image: devnusair24/football-ecom-frontend:latest
     container_name: football-frontend
     ports:
       - "3000:3000"
