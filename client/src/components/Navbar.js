@@ -32,14 +32,6 @@ export default function Navbar() {
             </Link>
           </li>
 
-          {user?.role === 'admin' && (
-            <li>
-              <Link to="/admin" className="navbar-link">
-                Admin Panel
-              </Link>
-            </li>
-          )}
-
           <li>
             <Link to="/cart" className="navbar-link cart-badge">
               🛒 Cart
