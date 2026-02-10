@@ -1,20 +1,39 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const readline = require('readline');
 require('dotenv').config();
 
 const User = require('../models/User');
+
+// Create readline interface for user input
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+// Helper function to prompt for input
+const prompt = (question) => {
+  return new Promise((resolve) => {
+    rl.question(question, (answer) => {
+      resolve(answer);
+    });
+  });
+};
 
 const createAdmin = async () => {
   try {
     // Connect to MongoDB
     const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/football-ecom';
     await mongoose.connect(mongoURI);
-    console.log('📦 Connected to MongoDB');
+    console.log('📦 Connected to MongoDB\n');
     
-    // Admin user details - CHANGE THESE!
-    const email = 'admin@example.com';
-    const password = 'admin123'; // Change this!
-    const name = 'Admin User';
+    // Prompt for admin details
+    console.log('🔧 Create Admin User\n');
+    const name = await prompt('Enter admin name: ');
+    const email = await prompt('Enter admin email: ');
+    const password = await prompt('Enter admin password: ');
+    
+    console.log('\n⏳ Creating admin user...\n');
     
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -44,10 +63,12 @@ const createAdmin = async () => {
     
     console.log('\n🚀 You can now login at: http://localhost:3001/login');
     
+    rl.close();
     await mongoose.connection.close();
     process.exit(0);
   } catch (error) {
     console.error('❌ Error creating admin:', error.message);
+    rl.close();
     process.exit(1);
   }
 };
